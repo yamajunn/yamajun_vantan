@@ -1,7 +1,6 @@
 import os
 import cv2
 import numpy as np
-from PIL import Image
 import copy
 
 path = "./images1"
@@ -26,18 +25,27 @@ for file in files:
     # 画像の縦横
     h, w = img.shape[:2]
 
-    img = cv2.resize(img, (int(w*4), int(h*4)))
+    # 拡大倍率
+    scale = 2
 
-    h, w = h*4, w*4
+    # 拡大後の画像サイズを計算
+    new_h, new_w = h*scale, w*scale
+
+    # 2x2のブロックに複製するために、元画像の画素値を4回繰り返す
+    rep_img = np.repeat(np.repeat(img, scale, axis=0), scale, axis=1)
+
+    # 拡大後の画像を切り出す
+    resized_img = rep_img[:new_h, :new_w]
+
+    img = resized_img
+
+    h, w = h*scale, w*scale
     image_list = []
 
     for i in range(h):
         for j in range(w):
             b, g, r, a = img[i, j]
-            if a > 125:
-                img[i, j] = 0, 0, 0, 255
-            else:
-                img[i, j] = 0, 0, 0, 0
+            img[i, j] = 0, 0, 0, a
             b, g, r, a = img[i, j]
             image_list.append(a)
     
