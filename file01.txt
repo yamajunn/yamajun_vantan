@@ -1,0 +1,8 @@
+<aaaaa<<<<<< HEAD
+aaaaa
+fasgasfasfaaaaaa
+afsfa
+=======
+aaaa
+gggggg
+>>>>>>> feature1
